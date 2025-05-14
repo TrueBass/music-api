@@ -1,0 +1,27 @@
+.home-container {
+  height: 100vh;
+  width: 100%;
+  color: var(--dark-white);
+  /* border: 1px solid red; */
+}
+
+.home-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin: 20px 40px 0 40px;
+  /* border: 1px solid red; */
+}
+
+.social-credtis-container {
+  min-width: max-content;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 30px;
+  background: linear-gradient(45deg, #ffad50 0%, #d65959 50%, #fb5607 100%);
+  padding: 2px 10px 2px 10px; 
+  border-radius: 20px;
+  color: var(--dark-black);
+}

@@ -1,0 +1,22 @@
+export default {
+  OTHER: 'OTHER',
+  POP: 'POP',
+  ROCK: 'ROCK',
+  HIP_HOP: 'HIP_HOP',
+  ELECTRONIC: 'ELECTRONIC',
+  CLASSICAL: 'CLASSICAL',
+  JAZZ: 'JAZZ',
+  BLUES: 'BLUES',
+  COUNTRY: 'COUNTRY',
+  METAL: 'METAL',
+  REGGAE: 'REGGAE',
+  FOLK: 'FOLK',
+  PUNK: 'PUNK',
+  R_AND_B: 'R_AND_B',
+  SOUL: 'SOUL',
+  FUNK: 'FUNK',
+  LATIN: 'LATIN',
+  WORLD: 'WORLD',
+  AMBIENT: 'AMBIENT',
+  INDIE: 'INDIE'
+};

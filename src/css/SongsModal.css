@@ -1,0 +1,44 @@
+.playlist-songs-container {
+  display: flex;
+  flex-direction: column;
+  
+  width: 50%;
+  height: 100%;
+  /* border: 1px solid red; */
+  background-color: var(--dark-white);
+  border-radius: 20px;
+}
+
+.playlist-songs-modal-header {
+  color: var(--dark-black);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  
+  margin: 20px 20px 0 20px;
+}
+
+.playlist-songs-modal-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  height: 100%;
+}
+
+.playlists-songs-empty h3 {
+  color: var(--dark-black)
+}
+.playlists-songs-empty {
+  /* border: 1px solid red; */
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.file-input {
+  display: none;
+}

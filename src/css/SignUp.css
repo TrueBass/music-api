@@ -1,0 +1,25 @@
+.signup-form{
+  width: 370px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 20px;
+  background-color: var(--dark-white);
+}
+
+.signup-form-container{
+  display: grid;
+  place-items: center;
+  height: 100vh;
+}
+
+.auth-text-field{
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.login-link{
+  color: var(--dark-blue);
+  cursor: pointer;
+}

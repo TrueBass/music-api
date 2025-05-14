@@ -1,0 +1,13 @@
+.search-history-card-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: var(--dark-white);
+  color: var(--dark-black);
+  padding: 2px;
+  border-top: 2px solid var(--dark-black);
+}
+
+.search-history-card-container:hover {
+  background-color: #d0d0d0;
+}

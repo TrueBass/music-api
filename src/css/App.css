@@ -1,0 +1,24 @@
+/* #root {
+   max-width: 1280px;
+  margin: 0;
+  padding: 0;
+  border: 1px solid red;
+}
+*/
+* {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', sans-serif;
+}
+
+body {
+  /* border: 1px solid red; */
+  box-sizing: border-box;
+  min-height: 100%;
+  background-color: var(--dark-black);
+}
+
+.page-container {
+  display: flex;
+  flex-direction: row;
+}

@@ -1,0 +1,49 @@
+.searchbar-container {
+  width: 40%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--dark-white);
+  /* border-radius: 25px 25px 0 0; */
+  position: relative;
+  /* border: 1px solid red; */
+}
+
+.searchbar-btn {
+  position: absolute;
+  right: 8px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 0;
+  display: inline-block;
+  background: linear-gradient(45deg, var(--dark-black) 0%, var(--dark-blue) 100%);
+  transition: background 1s;
+}
+/*hover effect*/
+.searchbar-btn:hover {
+  cursor: pointer;
+  background: linear-gradient(45deg, var(--dark-blue) 0%, var(--dark-black) 100%);
+}
+/*button pressing effect*/
+.searchbar-btn:active {
+  box-shadow: rgba(0, 0, 0, 0.5) 0 10px 20px;
+}
+
+.searchbar-input {
+  width: 83%;
+  border: none;
+  background: none;
+  outline: none;
+  color: var(--dark-black);
+  font-size: 18px;
+  font-weight: 500;
+  padding: 10px 16px 10px 16px;
+  /* border: 1px solid red; */
+}
+
+.searchbar-history-modal {
+  position: absolute;
+  top: 44px;
+  width: 100%;
+}

@@ -1,0 +1,46 @@
+.login-form{
+  width: 350px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 20px;
+  background-color: var(--dark-white);
+}
+
+.login-form-container{
+  display: grid;
+  place-items: center;
+  height: 100vh;
+}
+
+.form-title{
+  color: var(--dark-black);
+  margin-bottom: 20px;
+}
+
+.auth-text-field{
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.login-btn{
+  margin-bottom: 20px;
+}
+
+.switch-form{
+  margin-top: 20px;
+}
+
+.switch-form p{
+  color: var(--dark-black);
+}
+
+.signup-link{
+  color: var(--dark-blue);
+  cursor: pointer;
+}
+
+.success-message{
+  color: #6acb89
+}
