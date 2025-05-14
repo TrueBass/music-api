@@ -1,52 +1,72 @@
-import { useEffect, useState } from "react";
-import { SongsContext } from "./songsCtx";
-import { getAllSongsInfoFromPlaylist } from "../api/songs-api";
+import "../css/PlayingSongProvider.css"
+import { useEffect, useRef, useState } from "react";
+import { PlayingSongContext } from "./songsCtx";
 
-export function SongsProvider({children, playlist}) {
-  const [
-    songs,
-    setSongs
-  ] = useState([]);
+import { getSongBytes } from "../api/songs-api";
 
-  const [
-    currPlaylist,
-    setCurrPlaylist
-  ] = useState(playlist);
+export function PlayingSongProvider({children}) {
+  const audioRef = useRef(null);
+  const [ song, setSong ] = useState([]);
+  const [songId, setSongId] = useState(null);
+  const [isPlaying, setIsPlaying] = useState(false);
 
   useState(()=>{
-    
-
-    // let savedSongs = localStorage.getItem("playlistSongs"+currPlaylist?.id);
-    // if(savedSongs) setSongs(JSON.parse(savedSongs));
-    // else {
-      getAllSongs(currPlaylist?.id);
-    // }
-  }, [currPlaylist]);
+    const currentAudioSrc = audioRef.current ? audioRef.current.src : null;
+    return () => {
+      if (currentAudioSrc && currentAudioSrc.startsWith('blob:')) {
+        URL.revokeObjectURL(currentAudioSrc);
+      }
+    };
+  }, [audioRef.current?.src]);
   
-  useEffect(()=>{
-    localStorage.setItem("playlistSongs", JSON.stringify(songs));
-  }, [songs]);
+  // useEffect(()=>{
+    
+  // }, [song]);
 
-  const addSong = (song) => {
-    if(songs.includes(song))
-      return;
-    setSongs(prev => [...prev, song]);
+  const playSong = async (songId) => {
+    setIsPlaying(false);
+    try {
+      console.log("invoked");
+      const arrayBuffer = await getSongBytes(songId);
+      console.log("got bytes");
+
+      const audioBlob = new Blob([arrayBuffer], { type: 'audio/mpeg' });
+      console.log("created audio blob");
+      
+      const audioUrl = URL.createObjectURL(audioBlob);
+      console.log("added audio url");
+      
+      if (audioRef.current) {
+        audioRef.current.src = audioUrl;
+        audioRef.current.play()
+          .then(() => setIsPlaying(true))
+          .catch(err => {
+            console.error("Error playing audio:", err);
+            setIsPlaying(false);
+          });
+      }
+    } catch (e) {
+      console.error('Failed to fetch or play song:', e);
+      setIsPlaying(false);
+    }
   };
 
-  const deleteSong = (id) => {
-    setSongs(prev => prev.filter((_, i) => i !== id));
+  const pauseSong = async () => {
+    setIsPlaying(false);
   };
 
   const value = {
-    songs,
-    addSong,
-    deleteSong,
-    setCurrPlaylist
+    song,
+    setSong,
+    playSong,
+    pauseSong
   };
 
   return (
-    <SongsContext.Provider value={value}>
-      {children}
-    </SongsContext.Provider>
+    <PlayingSongContext.Provider value={value}>
+          {children}
+          <audio ref={audioRef} controls onEnded={() => setIsPlaying(false)} >
+          </audio>
+    </PlayingSongContext.Provider>
   );
 }

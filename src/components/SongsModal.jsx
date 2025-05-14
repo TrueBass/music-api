@@ -2,8 +2,6 @@ import "../css/SongsModal.css";
 import { useEffect, useState } from "react";
 import { IconPlus } from '@tabler/icons-react';
 
-import { useSongsContext } from "../contexts/songsCtx";
-
 import SongCard from "./SongCard";
 import SongsList from "./SongsList";
 import UploadField from "./UploadField";
@@ -49,7 +47,9 @@ export default function SongsModal({visible, playlist, songs, setSongs, onClose}
           <AddSongModal songData={newSongData} setSongData={setNewSongData} onAdd={handleAddSong}/>
         </div>:
         <SongsList>
-          {songs.map((s)=><SongCard key={s.id} song={s}/>)}
+          {songs.map((s)=>
+            <SongCard key={s.id} song={s}/>
+          )}
         </SongsList>}
       </div>
     </div>

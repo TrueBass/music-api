@@ -1,11 +1,18 @@
+import { usePlayingSongContext } from "../contexts/songsCtx";
 import "../css/SongCard.css";
 
 import { IconThumbUpFilled, IconPlayerPlayFilled  } from '@tabler/icons-react';
 
 export default function SongCard({song, onClick}) {
+  const {
+    playSong
+  } = usePlayingSongContext();
+
   return (
     <li key={song.id} className="song-card-container" onClick={onClick}>
-      <IconPlayerPlayFilled stroke={2} size={40} style={{marginRight: "10px"}} />
+      <IconPlayerPlayFilled stroke={2} size={40} style={{marginRight: "10px"}}
+        onClick={async()=>await playSong(song.id)}
+      />
       <div className="song-card-rows-container">
         <div className="song-card-row">
           <h3>{`${song.title} - ${song.author}`}</h3>

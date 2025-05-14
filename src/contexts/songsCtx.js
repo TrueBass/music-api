@@ -1,4 +1,4 @@
 import { createContext, useContext } from 'react';
 
-export const SongsContext = createContext();
-export const useSongsContext = () => useContext(SongsContext);
+export const PlayingSongContext = createContext();
+export const usePlayingSongContext = () => useContext(PlayingSongContext);

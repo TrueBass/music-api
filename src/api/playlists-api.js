@@ -9,15 +9,10 @@ export const getAllUserPlaylists = async (userId) => {
       }
     });
 
-    if(!response.ok){
-      console.log(response);
-      return [];
-    }
+    if(!response.ok) return [];
 
-    const data = await response.json();
-
-    return data;
+    return await response.json();
   } catch (error) {
-    console.log(error.message);
+    return [];
   }
 };

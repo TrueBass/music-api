@@ -5,6 +5,7 @@ import {Routes, Route, Navigate} from "react-router-dom";
 
 import { UserProvider } from './contexts/UserContext.jsx';
 import { SearchProvider } from "./contexts/SearchContext";
+import { PlayingSongProvider } from "./contexts/SongsContext";
 import { PlaylistsProvider } from './contexts/PlaylistsContext.jsx';
 
 import Home from './pages/Home.jsx';
@@ -21,7 +22,9 @@ const ProtectedLayout = ({children}) => (
     <div className='page-container'>
       <NavBar />
       <UserProvider>
-        {children}
+        <PlayingSongProvider>
+          {children}
+        </PlayingSongProvider>
       </UserProvider>
     </div>
   </ProtectedRoute>

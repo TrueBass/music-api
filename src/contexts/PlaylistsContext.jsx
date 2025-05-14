@@ -20,11 +20,10 @@ export function PlaylistsProvider({children}) {
     const fetchPlaylists = async () => {
       const res = await getAllUserPlaylists(user.id);
       if(res){
-        console.log(res);
         localStorage.setItem("playlists", JSON.stringify(res));
         setPlaylists(res);
       }else {
-        // handle fetching error
+        setPlaylists([]);
       }
     };
     let savedSearchHistory = localStorage.getItem("playlistsHistory");

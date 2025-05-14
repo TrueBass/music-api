@@ -5,8 +5,8 @@
   position: fixed; /* Fixed positioning relative to the viewport */
   bottom: 20px;
   right: -300px; /* Start off-screen to the right */
-  background-color: var(--dark-white); /* Example success color */
-  color: var(--dark-white);
+  background-color: #8fe086; /* Example success color */
+  color: #5e857c;
   padding: 15px 20px;
   border-radius: 5px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);

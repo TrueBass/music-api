@@ -67,3 +67,23 @@ export const getSongData = async (songId) => {
     return null;
   }
 };
+
+export const getSongBytes = async (songId) => {
+  try {
+    const response = await fetch(`${SONGS_API_URL}/bytes/${songId}`, {
+      method: "GET",
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    return await response.arrayBuffer();
+  } catch (error) {
+    console.log(error.message);
+    return null;
+  }
+};
