@@ -63,10 +63,13 @@ export function PlayingSongProvider({children}) {
   };
 
   return (
-    <PlayingSongContext.Provider value={value}>
-          {children}
-          <audio ref={audioRef} controls onEnded={() => setIsPlaying(false)} >
-          </audio>
+    <PlayingSongContext.Provider value={value} >
+      <div className="playing-song-provider-container">
+        {children}
+        <audio ref={audioRef} controls onEnded={() => setIsPlaying(false)}
+          className="playing-song-provider-audio-ref">
+        </audio>
+      </div>
     </PlayingSongContext.Provider>
   );
 }

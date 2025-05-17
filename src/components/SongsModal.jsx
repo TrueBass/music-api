@@ -37,7 +37,7 @@ export default function SongsModal({visible, playlist, songs, setSongs, onClose}
         <IconPlus stroke={2} />
       </div>
       <div className="playlist-songs-modal-list">
-        {(!songs.length)?
+        {(!songs?.length)?
         Object.keys(newSongData).length == 0?
           <div className="playlists-songs-empty">
             <h3>There are no songs</h3>

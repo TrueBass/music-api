@@ -22,9 +22,7 @@ const ProtectedLayout = ({children}) => (
     <div className='page-container'>
       <NavBar />
       <UserProvider>
-        <PlayingSongProvider>
-          {children}
-        </PlayingSongProvider>
+        {children}
       </UserProvider>
     </div>
   </ProtectedRoute>
@@ -40,22 +38,28 @@ function App() {
         <Route path='/home' element={
           <ProtectedLayout>
             <SearchProvider>
-              <Home />
+              <PlayingSongProvider>
+                <Home />
+              </PlayingSongProvider>
             </SearchProvider>
           </ProtectedLayout>
         }/>
 
         <Route path='/account' element={
           <ProtectedLayout>
-            <Account/>
+            <PlayingSongProvider>
+              <Account/>
+            </PlayingSongProvider>
           </ProtectedLayout>
         }/>
 
         <Route path='/playlists' element={
           <ProtectedLayout>
-            <PlaylistsProvider>
-              <Playlists/>
-            </PlaylistsProvider>
+            <PlayingSongProvider>
+              <PlaylistsProvider>
+                <Playlists/>
+              </PlaylistsProvider>
+            </PlayingSongProvider>
           </ProtectedLayout>
         }/>
 
