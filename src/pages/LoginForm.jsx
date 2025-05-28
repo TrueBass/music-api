@@ -46,7 +46,10 @@ const LoginForm = () => {
     }
     
     const err = await loginUser(emailOrUsername, password);
-    if (err) setErrors({general: err});
+    if (err){
+      setErrors(err);
+      return;
+    }
     setSuccessMessage('Login successful!');
   };
 

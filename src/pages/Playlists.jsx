@@ -8,7 +8,6 @@ import { TextField, Switch, Button } from "@mui/material";
 import { createPlaylist } from "../api/user-api";
 
 import { useUserContext } from "../contexts/UserContext";
-import { PlayingSongProvider } from "../contexts/SongsContext";
 import { usePlaylistsContext } from "../contexts/playlistsCtx";
 
 import List from "../components/List";
@@ -17,7 +16,6 @@ import PopUpMessage from "../components/PopUpMessage";
 import SongsModal from "../components/SongsModal";
 import PlaylistCard from "../components/PlaylistCard";
 import { getAllSongsInfoFromPlaylist } from "../api/songs-api";
-import SongPlayer from "../components/SongPlayer";
 
 const switchStyle = {
   '& .MuiSwitch-thumb': {

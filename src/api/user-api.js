@@ -78,6 +78,78 @@ export const logoutUser = async () => {
   }
 };
 
+export const updateUsername = async (username) => {
+  const bearerToken = localStorage.getItem("accessToken");
+
+  try {
+    const response = await fetch(`${USERS_API_URL}/update-username`, {
+      method: "PUT",
+      headers: {
+        'Content-Type': 'application/json',
+        "Authorization": `Bearer ${bearerToken}`
+      },
+      body: JSON.stringify({ username })
+    });
+
+    if(!response.ok) {
+      console.log(response);
+      return null;
+    }
+
+    return response.ok;
+  } catch (error) {
+    console.log(error.message);
+    return null;
+  }
+};
+
+export const updateEmail = async (email) => {
+  try {
+    const bearerToken = localStorage.getItem("accessToken");
+
+    const response = await fetch(`${USERS_API_URL}/update-email`, {
+      method: "PUT",
+      headers: {
+        'Content-Type': 'application/json',
+        "Authorization": `Bearer ${bearerToken}`
+      },
+      body: JSON.stringify({ email })
+    });
+
+    if(!response.ok) {
+      console.log(response);
+      return null;
+    }
+
+    return response.ok;
+  } catch (error) {
+    console.log(error.message);
+    return null;
+  }
+};
+
+export const updatePassword = async (password) => {
+  const bearerToken = localStorage.getItem("accessToken");
+
+  try {
+    const response = await fetch(`${USERS_API_URL}/update-password`, {
+      method: "PUT",
+      headers: {
+        'Content-Type': 'application/json',
+        "Authorization": `Bearer ${bearerToken}`
+      },
+      body: JSON.stringify({ password })
+    });
+
+    if(!response.ok) {
+      return null;
+    }
+  } catch (error) {
+    console.log(error.message);
+    return null;
+  }
+};
+
 export const createPlaylist = async (createPlaylistBody) => {
   try {
     const response = await fetch(`${PLAYLISTS_API_URL}/create`, {

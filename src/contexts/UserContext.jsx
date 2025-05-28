@@ -41,9 +41,19 @@ export const UserProvider = ({children}) => {
     setUser(user);
   };
 
+  const updateUser = async () => {
+    const savedUser = await getUserByUsername();
+    if(!savedUser) {
+      return false;
+    }
+    setUser(savedUser);
+    return true;
+  };
+
   const value = {
     user,
-    saveUser
+    saveUser,
+    updateUser
   };
 
   return (
