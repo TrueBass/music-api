@@ -34,10 +34,14 @@ export async function loginUser(emailOrUsername, password) {
   }
 };
 
-export async function getUserByUsername(){
+export async function getUserByUsername(username){
+
   try {
-    const accessToken = parseJwt(localStorage.getItem("accessToken"));
-    const username = accessToken.sub;
+    let accessToken;
+    if(username == undefined) {
+      accessToken = parseJwt(localStorage.getItem("accessToken"));
+      username = accessToken.sub;
+    }
 
     const response = await fetch(`${USERS_API_URL}/${username}`, {
       method: 'GET',

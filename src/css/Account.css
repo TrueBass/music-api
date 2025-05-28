@@ -32,12 +32,27 @@
   /* border: 1px inset red; */
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
-  gap: 40px;
+  justify-content: space-between;
+  width: 100%;
+  /* gap: 40px; */
   margin: 20px 40px 0 40px;
 }
 
-.personal-info-item {
+.personal-info-user-creds {
+  width: 40%;
+  /* border: 1px solid red; */
+  background-color: var(--dark-white);
+  padding: 10px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+
+
+/* .personal-info-item {
   padding: 10px;
   color: var(--dark-black);
   background-color: var(--dark-white);
@@ -48,10 +63,15 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+} */
+
+.personal-info-item-title {
+  color: var(--dark-black);
 }
 
 .personal-info-item p {
   font-size: 20px;
+  color: var(--dark-black)
 }
 
 .personal-info-item-title {

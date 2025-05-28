@@ -77,7 +77,7 @@ export default function Account() {
 
     const res = await updateUsername(trimmedUsername);
     if(res) {
-      const updateRes = await updateUser();
+      const updateRes = await updateUser(trimmedUsername);
       console.log(updateRes);
       if(!updateRes) {
         setGlobalError(
@@ -102,51 +102,60 @@ export default function Account() {
           Personal Information
         </h1>
         <div className="personal-info-items">
-          <div className="personal-info-item">
-            <div className="personal-info-item-title">
-              <h2>Username</h2>
-              <IconUserHeart stroke={2} />
+
+          <div className="personal-info-user-creds">
+            <div className="personal-info-username">
+              <div className="personal-info-item-title">
+                <h2>Username</h2>
+                <IconUserHeart stroke={2} />
+              </div>
+              <div className="personal-info-item-edit-row">
+                <TextField fullWidth value={username} onChange={e=>setUsername(e.target.value)} />
+                <Button variant="contained" sx={{marginLeft: "10px"}}
+                  disabled={user?.username == username}
+                  loading={loading && user?.username !== username}
+                  onClick={handleUpdateUsername}>Edit</Button>
+              </div>
             </div>
-            <div className="personal-info-item-edit-row">
-              <TextField fullWidth value={username} onChange={e=>setUsername(e.target.value)} />
-              <Button variant="contained" sx={{marginLeft: "10px"}}
-                disabled={user?.username == username}
-                loading={loading && user?.username !== username}
-                onClick={handleUpdateUsername}>Edit</Button>
-            </div>
-          </div>
-          <div className="personal-info-item">
-            <div className="personal-info-item-title">
-              <h2>Email</h2>
-              <IconMail stroke={2} />
-            </div>
-            <div className="personal-info-item-edit-row">
-              <TextField fullWidth value={email} onChange={e=>setEmail(e.target.value)}/>
-              <Button variant="contained" sx={{marginLeft: "10px"}}
-                disabled={user?.email == email}
-                loading={loading && user?.email !== email}
-                onClick={handleUpdateEmail}>Edit</Button>
-            </div>
-          </div>
-          <div className="personal-info-item">
-            <div className="personal-info-item-title">
-              <h2>Social Credits</h2>
-              <IconCoins stroke={2} />
-            </div>
-            <p>{user?.socialCredit}</p>
-          </div>
-          <div className="personal-info-item">
-            <div className="personal-info-item-title">
-              <h2>Songs</h2>
-              <IconMusic stroke={2} />
+            <div className="personal-info-email">
+              <div className="personal-info-item-title">
+                <h2>Email</h2>
+                <IconMail stroke={2} />
+              </div>
+              <div className="personal-info-item-edit-row">
+                <TextField fullWidth value={email} onChange={e=>setEmail(e.target.value)}/>
+                <Button variant="contained" sx={{marginLeft: "10px"}}
+                  disabled={user?.email == email}
+                  loading={loading && user?.email !== email}
+                  onClick={handleUpdateEmail}>Edit</Button>
+              </div>
             </div>
           </div>
-          <div className="personal-info-item">
-            <div className="personal-info-item-title">
-              <h2>Playlists</h2>
-              <IconPlaylist stroke={2} />
+
+         
+          <div className="personal-info-user-creds">
+            <div className="personal-info-item">
+              <div className="personal-info-item-title">
+                <h2>Social Credits</h2>
+                <IconCoins stroke={2} />
+              </div>
+              <p>{user?.socialCredit}</p>
+            </div>
+            
+            <div className="personal-info-item">
+              <div className="personal-info-item-title">
+                <h2>Songs</h2>
+                <IconMusic stroke={2} />
+              </div>
+            </div>
+            <div className="personal-info-item">
+              <div className="personal-info-item-title">
+                <h2>Playlists</h2>
+                <IconPlaylist stroke={2} />
+              </div>
             </div>
           </div>
+        
         </div>
       </div>
 

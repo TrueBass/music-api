@@ -41,8 +41,8 @@ export const UserProvider = ({children}) => {
     setUser(user);
   };
 
-  const updateUser = async () => {
-    const savedUser = await getUserByUsername();
+  const updateUser = async (username) => {
+    const savedUser = await getUserByUsername(username);
     if(!savedUser) {
       return false;
     }
