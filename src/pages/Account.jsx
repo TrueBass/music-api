@@ -1,9 +1,10 @@
 import "../css/Account.css";
-import { useUserContext } from "../contexts/UserContext";
-import { IconMail, IconUserHeart, IconCoins, IconPlaylist, IconMusic } from '@tabler/icons-react';
-import { Button, TextField } from "@mui/material";
 import { useState } from "react";
-import { validateEmail, validateUsername } from "../validators/validations";
+import { useUserContext } from "../contexts/UserContext";
+import { Button, TextField } from "@mui/material";
+import { IconMail, IconUserHeart, IconCoins, IconPlaylist, IconMusic } from '@tabler/icons-react';
+import { validateEmail, validateUsername, validatePassword } from "../validators/validations";
+import PasswordTextField from "../components/PasswordTextField";
 import { updateEmail, updateUsername, updatePassword } from "../api/user-api";
 import PopUpMessage from "../components/PopUpMessage";
 
@@ -15,6 +16,7 @@ export default function Account() {
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [repeatNewPassword, setRepeatNewPassword] = useState("");
+  const [changePasswdModalIsOpen, setChangePasswwdModalIsOpen] = useState(false);
   const [globalError, setGlobalError] = useState("");
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
@@ -91,7 +93,19 @@ export default function Account() {
     setIsSuccessMsgVisible(true);
   };
 
-  
+  const handleUpdatePassword = async () => {
+    const trimmedNewPasswd = newPassword.trim();
+    const trimmedRepeatPasswd = repeatNewPassword.trim();
+    if (trimmedNewPasswd !== trimmedRepeatPasswd) {
+      return;
+    }
+    if (!validatePassword(trimmedNewPasswd)) {
+      return;
+    }
+    const res = await updatePassword(trimmedNewPasswd);
+
+    setChangePasswwdModalIsOpen(false);
+  }
   
   return (
     globalError.length > 0?
@@ -128,6 +142,30 @@ export default function Account() {
                   disabled={user?.email == email}
                   loading={loading && user?.email !== email}
                   onClick={handleUpdateEmail}>Edit</Button>
+              </div>
+            </div>
+            <div className="personal-info-password">
+              <div className="personal-info-item-title">
+                <Button variant="contained" style={{display: (!changePasswdModalIsOpen)?"flex": "none"}}
+                onClick={()=>setChangePasswwdModalIsOpen(true)}>
+                  Change Password</Button>
+              </div>
+              <div className="personal-info-change-passwd-modal" style={{display: changePasswdModalIsOpen?"flex": "none"}}>
+                <div className="personal-info-item-edit-row personal-info-password-modal-exit-row">
+                  <PasswordTextField value={oldPassword} onChange={e=>setOldPassword(e.target.value)} label="Old password"/>
+                </div>
+                <div className="personal-info-item-edit-row personal-info-password-modal-exit-row">
+                  <PasswordTextField value={newPassword} onChange={e=>setNewPassword(e.target.value)} label="New password"/>
+                </div>
+                <div className="personal-info-item-edit-row personal-info-password-modal-exit-row">
+                  <PasswordTextField value={repeatNewPassword} onChange={e=>setRepeatNewPassword(e.target.value)} label="Repeat new password"/>
+                </div>
+                <div style={{width: "50%", display: "flex"}}>
+                  <Button variant="contained" fullWidth sx={{marginRight: "10px"}}
+                  onClick={handleUpdatePassword}>Change</Button>
+                  <Button variant="contained" fullWidth color="error"
+                  onClick={()=>setChangePasswwdModalIsOpen(false)}>Cancel</Button>
+                </div>
               </div>
             </div>
           </div>

@@ -87,5 +87,14 @@
   justify-content: space-between;
 }
 
+.personal-info-change-passwd-modal {
+  flex-direction: column;
+  width: 100%;
+}
+
+.personal-info-password-modal-exit-row {
+  margin-bottom: 20px;
+}
+
 .account-danger-zone-container {
 }
