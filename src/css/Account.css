@@ -29,13 +29,13 @@
 }
 
 .personal-info-items {
+  margin-top: 20px;
   /* border: 1px inset red; */
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
   width: 100%;
-  /* gap: 40px; */
-  margin: 20px 40px 0 40px;
 }
 
 .personal-info-user-creds {
@@ -48,6 +48,7 @@
   flex-direction: column;
   justify-content: space-between;
   gap: 40px;
+  margin: 0 40px 40px 40px;
 }
 
 
