@@ -132,24 +132,24 @@ export const updateEmail = async (email) => {
   }
 };
 
-export const updatePassword = async (password) => {
-  const bearerToken = localStorage.getItem("accessToken");
-
+export const updatePassword = async (body) => {
   try {
+    const bearerToken = localStorage.getItem("accessToken");
+
     const response = await fetch(`${USERS_API_URL}/update-password`, {
       method: "PUT",
       headers: {
         'Content-Type': 'application/json',
         "Authorization": `Bearer ${bearerToken}`
       },
-      body: JSON.stringify({ password })
+      body: JSON.stringify(body)
     });
 
     if(!response.ok) {
-      return null;
+      const deserializedRes = await response.json();
+      return deserializedRes.message;
     }
   } catch (error) {
-    console.log(error.message);
     return null;
   }
 };

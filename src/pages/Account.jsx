@@ -16,7 +16,7 @@ export default function Account() {
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [repeatNewPassword, setRepeatNewPassword] = useState("");
-  const [changePasswdModalIsOpen, setChangePasswwdModalIsOpen] = useState(false);
+  const [changePasswdModalIsOpen, setChangePasswdModalIsOpen] = useState(false);
   const [globalError, setGlobalError] = useState("");
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
@@ -94,17 +94,27 @@ export default function Account() {
   };
 
   const handleUpdatePassword = async () => {
+    setErrors({});
+    const trimmedOldPasswd = oldPassword.trim();
     const trimmedNewPasswd = newPassword.trim();
     const trimmedRepeatPasswd = repeatNewPassword.trim();
-    if (trimmedNewPasswd !== trimmedRepeatPasswd) {
+    if (!(trimmedNewPasswd && trimmedOldPasswd && trimmedRepeatPasswd)) {
+      setErrors({password: "Please, fill all fields."});
       return;
     }
-    if (!validatePassword(trimmedNewPasswd)) {
-      return;
-    }
-    const res = await updatePassword(trimmedNewPasswd);
+    
+    const res = await updatePassword({
+      oldPassword: trimmedOldPasswd,
+      newPassword: trimmedNewPasswd,
+      confirmPassword: trimmedRepeatPasswd
+    });
 
-    setChangePasswwdModalIsOpen(false);
+    if (res) {
+      setErrors({password: res});
+      return;
+    }
+
+    setChangePasswdModalIsOpen(false);
   }
   
   return (
@@ -147,24 +157,28 @@ export default function Account() {
             <div className="personal-info-password">
               <div className="personal-info-item-title">
                 <Button variant="contained" style={{display: (!changePasswdModalIsOpen)?"flex": "none"}}
-                onClick={()=>setChangePasswwdModalIsOpen(true)}>
+                onClick={()=>setChangePasswdModalIsOpen(true)}>
                   Change Password</Button>
               </div>
               <div className="personal-info-change-passwd-modal" style={{display: changePasswdModalIsOpen?"flex": "none"}}>
-                <div className="personal-info-item-edit-row personal-info-password-modal-exit-row">
+                <div className="personal-info-item-edit-row personal-info-password-modal-edit-row">
                   <PasswordTextField value={oldPassword} onChange={e=>setOldPassword(e.target.value)} label="Old password"/>
                 </div>
-                <div className="personal-info-item-edit-row personal-info-password-modal-exit-row">
+                <div className="personal-info-item-edit-row personal-info-password-modal-edit-row">
                   <PasswordTextField value={newPassword} onChange={e=>setNewPassword(e.target.value)} label="New password"/>
                 </div>
-                <div className="personal-info-item-edit-row personal-info-password-modal-exit-row">
+                <div className="personal-info-item-edit-row personal-info-password-modal-edit-row">
                   <PasswordTextField value={repeatNewPassword} onChange={e=>setRepeatNewPassword(e.target.value)} label="Repeat new password"/>
                 </div>
+                {Object.keys(errors).length &&
+                <div className="personal-info-item-edit-row personal-info-password-modal-edit-row">
+                  <p style={{ textAlign: "center", color: "#d32f2f", width: "50%"}}>{errors.password}</p>
+                </div>}
                 <div style={{width: "50%", display: "flex"}}>
                   <Button variant="contained" fullWidth sx={{marginRight: "10px"}}
                   onClick={handleUpdatePassword}>Change</Button>
                   <Button variant="contained" fullWidth color="error"
-                  onClick={()=>setChangePasswwdModalIsOpen(false)}>Cancel</Button>
+                  onClick={()=>setChangePasswdModalIsOpen(false)}>Cancel</Button>
                 </div>
               </div>
             </div>
