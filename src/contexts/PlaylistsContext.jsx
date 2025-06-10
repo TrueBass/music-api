@@ -77,6 +77,14 @@ export function PlaylistsProvider({children}) {
     setPlaylists(prev=>prev.filter((item,i)=>i!==id));
   };
 
+  const setPlaylistIsPrivate = (playlistId, val) => {
+    setPlaylists(prev =>
+      prev.map(p =>
+        p.id === playlistId ? { ...p, isPrivate: val } : p
+      )
+    );
+  };
+
   const value = {
     searchHistory,
     addToSearchHistory,
@@ -84,7 +92,8 @@ export function PlaylistsProvider({children}) {
     removeItem,
     playlists,
     addPlaylist,
-    removePlaylist
+    removePlaylist,
+    setPlaylistIsPrivate
   };
 
   return (
