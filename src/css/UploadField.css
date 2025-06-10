@@ -6,7 +6,15 @@
   text-align: center;
   cursor: pointer;
   transition: color;
+  margin-bottom: 10px;
 }
 .upload-field:hover {
   background-color: #b4b4b4;
+}
+
+.upload-field-main-container {
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  /* border: 1px solid red; */
 }

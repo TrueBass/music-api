@@ -154,6 +154,26 @@ export const updatePassword = async (body) => {
   }
 };
 
+export const updateSocialCredit = async (body) => {
+  try {
+    const response = await fetch(`${USERS_API_URL}/update-social-credit`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(body)
+    });
+      const deserializedRes = await response.json();
+      console.log(deserializedRes);
+    if(!response.ok) {
+      return deserializedRes.message;
+    }
+    return deserializedRes.message;
+  } catch (error) {
+    return 0;
+  }
+};
+
 export const createPlaylist = async (createPlaylistBody) => {
   try {
     const response = await fetch(`${PLAYLISTS_API_URL}/create`, {

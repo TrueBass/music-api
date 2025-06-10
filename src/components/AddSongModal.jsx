@@ -3,7 +3,7 @@ import { useState } from "react";
 import { TextField, Button, FormControl, Select, InputLabel, MenuItem, NativeSelect } from "@mui/material";
 import genres from "../enums/genres";
 
-export default function AddSongModal({songData, setSongData, onAdd}){
+export default function AddSongModal({songData, setSongData, onAdd, onClose}){
 
   const [errors, setErrors] = useState({});
   const [title, setTitle] = useState("");
@@ -22,10 +22,11 @@ export default function AddSongModal({songData, setSongData, onAdd}){
     }
     
     setErrors(newErrors);
-    if(Object.keys(newErrors).length < 0)
+    if(Object.keys(newErrors).length > 0)
       return;
 
     await onAdd({...songData, author: clearAuthor, title: clearTitle, genre: songGenre});
+    onClose&&onClose();
   }
 
   function handleCancel() {

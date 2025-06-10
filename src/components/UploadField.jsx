@@ -5,7 +5,7 @@ import { Button } from "@mui/material";
 import { mainScheme } from "../colors/schemes";
 import { IconCloudUp } from '@tabler/icons-react';
 
-export default function UploadField({setSongData}) {
+export default function UploadField({setSongData, onCancel}) {
   const [file, setFile] = useState(null);
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef(null);
@@ -79,35 +79,40 @@ export default function UploadField({setSongData}) {
   };
 
   return (
-    <div
-      onDrop={handleDrop}
-      onDragOver={handleDragOver}
-      onDragEnter={handleDragEnter}
-      onDragLeave={handleDragLeave}
-      className="upload-field"
-      ref={dropAreaRef => {
-          if (dropAreaRef) {
-              dropAreaRef.addEventListener('drop', handleDrop);
-              dropAreaRef.addEventListener('dragover', handleDragOver);
-              dropAreaRef.addEventListener('dragenter', handleDragEnter);
-              dropAreaRef.addEventListener('dragleave', handleDragLeave);
-          }
-      }}
-    >
-      <IconCloudUp size={32} color={mainScheme.black} />
-      <p style={{color: mainScheme.black}}>
-          Drag and drop a music file here, or click to select.
-      </p>
-      <input
-          type="file"
-          accept="audio/mpeg"
-          onChange={handleInputChange}
-          className="file-input"
-          ref={fileInputRef}
-          aria-label="Upload music file"
-      />
-      <Button onClick={handleFileSelect}>
-          Choose File
+    <div className="upload-field-main-container">
+      <div
+        onDrop={handleDrop}
+        onDragOver={handleDragOver}
+        onDragEnter={handleDragEnter}
+        onDragLeave={handleDragLeave}
+        className="upload-field"
+        ref={dropAreaRef => {
+            if (dropAreaRef) {
+                dropAreaRef.addEventListener('drop', handleDrop);
+                dropAreaRef.addEventListener('dragover', handleDragOver);
+                dropAreaRef.addEventListener('dragenter', handleDragEnter);
+                dropAreaRef.addEventListener('dragleave', handleDragLeave);
+            }
+        }}
+      >
+        <IconCloudUp size={32} color={mainScheme.black} />
+        <p style={{color: mainScheme.black}}>
+            Drag and drop a music file here, or click to select.
+        </p>
+        <input
+            type="file"
+            accept="audio/mpeg"
+            onChange={handleInputChange}
+            className="file-input"
+            ref={fileInputRef}
+            aria-label="Upload music file"
+        />
+        <Button onClick={handleFileSelect}>
+            Choose File
+        </Button>
+      </div>
+      <Button color="error" variant="contained" onClick={onCancel}>
+        Cancel
       </Button>
     </div>
   );

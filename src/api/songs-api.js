@@ -11,7 +11,6 @@ export const addSongToPlaylist = async (body) => {
     });
 
     if(!response.ok){
-      console.log(response);
       return null;
     }
 
