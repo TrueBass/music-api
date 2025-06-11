@@ -107,4 +107,26 @@ export const getAllPopularSongs = async () => {
     console.log(error);
     return null;
   }
-}
+};
+
+export const getTop10ForUser = async (userId) => {
+  try {
+    const response = await fetch(`${SONGS_API_URL}/top10?userId=${userId}`, {
+      method: "GET",
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+
+    if(!response.ok){
+      console.log("error!");
+      return null;
+    }
+    console.log(result);
+    const deserializedRes = await response.json();
+    return deserializedRes;
+  } catch (error){
+    console.log(error.message);
+    return null;
+  }
+};

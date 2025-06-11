@@ -1,5 +1,5 @@
 import "../css/Account.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useUserContext } from "../contexts/UserContext";
 import { Button, TextField } from "@mui/material";
 import { IconMail, IconUserHeart, IconCoins, IconPlaylist, IconMusic } from '@tabler/icons-react';
@@ -7,10 +7,13 @@ import { validateEmail, validateUsername, validatePassword } from "../validators
 import PasswordTextField from "../components/PasswordTextField";
 import { updateEmail, updateUsername, updatePassword } from "../api/user-api";
 import PopUpMessage from "../components/PopUpMessage";
+import SongsList from "../components/SongsList";
+import { getTop10ForUser } from "../api/songs-api";
 
 export default function Account() {
   const {user, updateUser} = useUserContext();
 
+  const [topSongs, setTopSongs] = useState([]);
   const [username, setUsername] = useState(user?.username);
   const [email, setEmail] = useState(user?.email);
   const [oldPassword, setOldPassword] = useState("");
@@ -22,6 +25,21 @@ export default function Account() {
   const [loading, setLoading] = useState(false);
   const [isSuccessMsgVisible, setIsSuccessMsgVisible] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
+
+  useEffect(()=>{
+    const getTopSongs = async () => {
+      const res = await getTop10ForUser(user.id);
+      console.log(res);
+
+      if(res === null){
+        return;
+      }
+
+      setTopSongs(res);
+    };
+
+    getTopSongs();
+  }, []);
 
   const handleUpdateEmail = async () => {
     setLoading(true);
@@ -196,9 +214,17 @@ export default function Account() {
             
             <div className="personal-info-item">
               <div className="personal-info-item-title">
-                <h2>Songs</h2>
+                <h2>Top 10 Songs</h2>
                 <IconMusic stroke={2} />
               </div>
+              {topSongs?
+                <SongsList>
+                {topSongs.map((s)=><li style={{backgroundColor: "black"}}>
+                  <h3>{s.title} - {s.author}</h3>
+                  <h3>Likes: {s.likes}</h3>
+                </li>)}
+              </SongsList>:
+              <h2 style={{color: "black"}}>No songs added yet.</h2>}
             </div>
             <div className="personal-info-item">
               <div className="personal-info-item-title">
