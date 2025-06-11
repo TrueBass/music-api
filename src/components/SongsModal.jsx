@@ -69,13 +69,12 @@ export default function SongsModal({visible, playlist, songs, setSongs, onClose}
   };
 
   const handleToggleVisibility = async () => {
-    const res = await changePlaylistVisibility(playlist.id, !playlist.isPrivate);
+    const res = await changePlaylistVisibility(playlist.id, playlist.isPrivate);
     if (res === null) {
       console.log("!Toggle privacy went wrong!");
       return;
     }
     setPlaylistIsPrivate(playlist.id, !playlist.isPrivate);
-    playlist.isPrivate = !playlist.isPrivate;
     handleMoreClose();
   };
 
@@ -115,7 +114,7 @@ export default function SongsModal({visible, playlist, songs, setSongs, onClose}
           <MenuItem onClick={handleToggleVisibility}>
             <div style={{display: "flex", justifyContent: "flex-start", alignItems: "center", width: "100%"}}>
               {playlist.isPrivate?
-                <IconLockOpen2 stroke={2} size={32}/>:
+                <IconLockOpen2 stroke={2} />:
                 <IconLock stroke={2} />}
               <p>Make {playlist.isPrivate? "public": "private"}</p>
             </div>

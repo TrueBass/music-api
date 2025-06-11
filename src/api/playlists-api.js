@@ -21,21 +21,20 @@ export const changePlaylistVisibility = async (playlistId, playlistVisibility) =
   try {
     const bearerToken = localStorage.getItem("accessToken");
 
-    const response = await fetch(`${PLAYLISTS_API_URL}/change-visibility/${playlistId}/${!playlistVisibility}`,{
+    const response = await fetch(`${PLAYLISTS_API_URL}/change-visibility?playlistId=${playlistId}&visibility=${!playlistVisibility}`,{
       method: "POST",
       headers: {
         'Content-Type': 'application/json',
-        "Authorization": `Bearer ${bearerToken}`
       }
     });
 
-    const deserializedRes = await response.json();
-    console.log(deserializedRes.message);
+    
 
     if(!response.ok){
+      const deserializedRes = await response.json();
+      console.log(deserializedRes.message);
       return null;
     }
-
   } catch (error) {
     return null;
   }
