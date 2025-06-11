@@ -86,3 +86,25 @@ export const getSongBytes = async (songId) => {
     return null;
   }
 };
+
+export const getAllPopularSongs = async () => {
+  try {
+    const response = await fetch(`${SONGS_API_URL}/popular/all`, {
+      method: "GET",
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+
+    const deserializedRes = await response.json();
+
+    if(!response.ok){
+      return deserializedRes.message;
+    }
+
+    return deserializedRes;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}

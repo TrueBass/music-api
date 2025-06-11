@@ -73,6 +73,10 @@ export default function SongsModal({visible, playlist, songs, setSongs, onClose}
     handleMoreClose();
   };
 
+  const handleDeleteSong = (playlistId, songId) => {
+    // TODO: inplement api call and ui updating
+  };
+
   return (
     <div className="playlist-songs-container" style={{display: visible?"flex":"none"}}>
       <div className="playlist-songs-modal-header">
@@ -92,8 +96,8 @@ export default function SongsModal({visible, playlist, songs, setSongs, onClose}
           slotProps={{
           paper: {
             style: {
-              maxHeight: ITEM_HEIGHT * 4.5,
-              width: '18ch'
+              // maxHeight: ITEM_HEIGHT * 4.5,
+              width: '20ch'
             },
           }}}>
           <MenuItem onClick={handleDeletePlaylist}>
@@ -105,7 +109,7 @@ export default function SongsModal({visible, playlist, songs, setSongs, onClose}
           <MenuItem onClick={handleToggleVisibility}>
             <div style={{display: "flex", justifyContent: "flex-start", alignItems: "center", width: "100%"}}>
               {playlist.isPrivate?
-                <IconLockOpen2 stroke={2} />:
+                <IconLockOpen2 stroke={2} size={32}/>:
                 <IconLock stroke={2} />}
               <p>Make {playlist.isPrivate? "public": "private"}</p>
             </div>
@@ -119,7 +123,7 @@ export default function SongsModal({visible, playlist, songs, setSongs, onClose}
           </div>:
           <SongsList>
           {songs?.map((s)=>
-            <SongCard key={s.id} song={s}/>
+            <SongCard key={s.id} song={s} onDelete={()=>handleDeleteSong(playlist.id, s.id)}/>
           )}
         </SongsList>}
       </div>

@@ -25,3 +25,7 @@
   border-radius: 20px;
   color: var(--dark-black);
 }
+
+.home-main-content {
+  width: 60%;
+}
