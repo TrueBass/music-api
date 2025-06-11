@@ -74,7 +74,7 @@ export function PlaylistsProvider({children}) {
   };
 
   const removePlaylist = (id) => {
-    setPlaylists(prev=>prev.filter((item,i)=>i!==id));
+    setPlaylists(prev=>prev.filter((item)=>item.id!==id));
   };
 
   const setPlaylistIsPrivate = (playlistId, val) => {

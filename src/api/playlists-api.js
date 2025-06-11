@@ -39,4 +39,23 @@ export const changePlaylistVisibility = async (playlistId, playlistVisibility) =
   } catch (error) {
     return null;
   }
-}
+};
+
+export const deletePlaylist = async (playlistId) => {
+  try {
+    const response = await fetch(`${PLAYLISTS_API_URL}/delete?playlistId=${playlistId}`, {
+      method: "DELETE",
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+
+    if(!response.ok){
+      const deserializedRes = await response.json();
+      return deserializedRes.message;
+    }
+  } catch (error) {
+    console.log(error.message);
+    return null;
+  }
+};

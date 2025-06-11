@@ -16,7 +16,7 @@ import { IconButton, Menu, MenuItem } from "@mui/material";
 
 import { addSongToPlaylist } from "../api/songs-api";
 import { updateSocialCredit } from "../api/user-api";
-import { changePlaylistVisibility } from "../api/playlists-api";
+import { changePlaylistVisibility, deletePlaylist } from "../api/playlists-api";
 import { useUserContext } from "../contexts/UserContext";
 import { usePlaylistsContext } from "../contexts/playlistsCtx";
 
@@ -24,7 +24,7 @@ const ITEM_HEIGHT = 48;
 
 export default function SongsModal({visible, playlist, songs, setSongs, onClose}) {
   const { user, saveUser } = useUserContext();
-  const {setPlaylistIsPrivate} = usePlaylistsContext();
+  const {setPlaylistIsPrivate, removePlaylist} = usePlaylistsContext();
 
   const [newSongData, setNewSongData] = useState({});
   const [addSongModalIsOpen, setAddSongModalIsOpen] = useState(false);
@@ -54,12 +54,18 @@ export default function SongsModal({visible, playlist, songs, setSongs, onClose}
     saveUser(user);
 
     setSongs(prev => [...prev, res]);
-    onClose&&onClose();
     setAddSongModalIsOpen(false);
   }
 
   const handleDeletePlaylist = async () => {
-    //TODO: make it work.
+    handleMoreClose();
+    const res = await deletePlaylist(playlist.id);
+    if(typeof res != "undefined"){
+      console.log(res);
+      return;
+    }
+    onClose&&onClose();
+    removePlaylist(playlist.id);
   };
 
   const handleToggleVisibility = async () => {

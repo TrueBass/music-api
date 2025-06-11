@@ -136,7 +136,7 @@ export default function Playlists() {
         <List list={playlists} onItemClick={onPlaylistClick}>
           {playlists.map((p)=><PlaylistCard key={p.id} item={p} onClick={()=>onPlaylistClick(p)}/>)}
         </List>
-        {<SongsModal visible={songsModalIsOpen} playlist={playlist} songs={songs} setSongs={setSongs}/>}
+        {<SongsModal visible={songsModalIsOpen} playlist={playlist} songs={songs} setSongs={setSongs} onClose={()=>setSongsModalIsOpen(false)}/>}
       </div>}
       <PopUpMessage message="Playlist has been created successfully!"
         isVisible={isSuccessMsgVisible} onClose={()=>setIsSuccessMsgVisible(false)}/>
