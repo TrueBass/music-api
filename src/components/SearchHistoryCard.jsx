@@ -1,7 +1,7 @@
 import "../css/SearchHistoryCard.css";
 import { IconX } from "@tabler/icons-react";
 
-export default function SearchHistoryCard({index, item, onRemove}) {
+export default function SearchHistoryCard({index, item, onRemove=null, onClick}) {
 
   function handleDelete() {
     onRemove(index);
@@ -9,8 +9,8 @@ export default function SearchHistoryCard({index, item, onRemove}) {
 
   return (
     <div className="search-history-card-container">
-      {item}
-      <IconX stroke={1} onClick={handleDelete}/>
+      <p onClick={onClick}>{item}</p>
+      {onRemove&&<IconX className="search-card-remove-icon" stroke={1} onClick={handleDelete}/>}
     </div>
   );
 }

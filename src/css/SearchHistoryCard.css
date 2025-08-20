@@ -8,6 +8,20 @@
   border-top: 2px solid var(--dark-black);
 }
 
-.search-history-card-container:hover {
+.search-card-remove-icon {
+  border-radius: 50%;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.search-card-remove-icon:hover {
+  background-color: #d0d0d0;
+}
+
+.search-history-card-container p {
+  width: 100%;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.search-history-card-container p:hover {
   background-color: #d0d0d0;
 }

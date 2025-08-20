@@ -1,4 +1,7 @@
 const SONGS_API_URL = "http://localhost:8080/music-api/songs";
+const LIKES_API_URL = "http://localhost:8080/music-api/likes";
+
+import { refreshAccessToken } from "./user-api";
 
 export const addSongToPlaylist = async (body) => {
   try {
@@ -87,12 +90,12 @@ export const getSongBytes = async (songId) => {
   }
 };
 
-export const getAllPopularSongs = async () => {
+export const getAllPopularSongs = async (userId) => {
   try {
-    const response = await fetch(`${SONGS_API_URL}/popular/all`, {
+    const response = await fetch(`${SONGS_API_URL}/popular/all?userId=${userId}`, {
       method: "GET",
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       }
     });
 
@@ -110,22 +113,135 @@ export const getAllPopularSongs = async () => {
 };
 
 export const getTop10ForUser = async (userId) => {
+  let bearerToken = localStorage.getItem("accessToken");
   try {
-    const response = await fetch(`${SONGS_API_URL}/top10?userId=${userId}`, {
+    let response = await fetch(`${SONGS_API_URL}/top10?userId=${userId}`, {
       method: "GET",
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        "Authorization": `Bearer ${bearerToken}`
       }
     });
 
+    if(response.status == 401){
+      await refreshAccessToken();
+      bearerToken = localStorage.getItem("accessToken");
+      response = await fetch(`${SONGS_API_URL}/top10?userId=${userId}`, {
+        method: "GET",
+        headers: {
+          'Content-Type': 'application/json',
+          "Authorization": `Bearer ${bearerToken}`
+        }
+      });
+    }
+
     if(!response.ok){
-      console.log("error!");
+      console.log("if error!");
       return null;
     }
-    console.log(result);
+
     const deserializedRes = await response.json();
     return deserializedRes;
   } catch (error){
+    console.log("catch error", error.message);
+    return null;
+  }
+};
+
+export const likeSong = async (userId, songId) => {
+  let bearerToken = localStorage.getItem("accessToken");
+   try {
+    const response = await fetch(`${LIKES_API_URL}/like`, {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+        "Authorization": `Bearer ${bearerToken}`
+      },
+      body: JSON.stringify({userId, songId})
+    });
+    const deserRes = await response.text();
+    console.log(deserRes);
+    if (!response.ok) {
+      console.error("Like request failed", response.status, response.statusText);
+      return null;
+    }
+   } catch (error) {
+    console.log(error.message);
+   }
+};
+
+export const unlikeSong = async (userId, songId) => {
+  let bearerToken = localStorage.getItem("accessToken");
+   try {
+    const response = await fetch(`${LIKES_API_URL}/unlike`, {
+      method: "DELETE",
+      headers: {
+        'Content-Type': 'application/json',
+        "Authorization": `Bearer ${bearerToken}`
+      },
+      body: JSON.stringify({userId, songId})
+    });
+   } catch (error) {
+    console.log(error.message);
+    return null;
+   }
+};
+
+export const getSongLikes = async (songId) => {
+  let bearerToken = localStorage.getItem("accessToken");
+
+  try {
+    const response = await fetch(`${LIKES_API_URL}/count?songId=${songId}`, {
+      method: "GET",
+      headers: {
+        'Content-Type': 'application/json',
+        "Authorization": `Bearer ${bearerToken}`
+      }
+    });
+
+    if(!response.ok) {
+      console.log(response);
+      return null;
+    }
+  } catch(error) {
+    console.log(error.message);
+    return null;
+  }
+};
+
+export const searchSongsByQuery = async (query) => {
+  let bearerToken = localStorage.getItem("accessToken");
+
+  try {
+    const response = await fetch(`${SONGS_API_URL}/search?query=${query}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        "Authorization": `Bearer ${bearerToken}`
+      }
+    });
+
+    const deserializedRes = await response.json();
+    return deserializedRes;
+  } catch (error) {
+    console.log(error.message);
+    return null;
+  }
+};
+
+export const searchSimilarSongsByQuery = async (query, userId) => {
+  let bearerToken = localStorage.getItem("accessToken");
+
+  try {
+    const response = await fetch(`${SONGS_API_URL}?query=${query}&userId=${userId}`,{
+      headers: {
+        'Content-Type': 'application/json',
+        "Authorization": `Bearer ${bearerToken}`
+      }
+    });
+
+    const deserializedRes = await response.json();
+    return deserializedRes;
+  } catch (error) {
     console.log(error.message);
     return null;
   }

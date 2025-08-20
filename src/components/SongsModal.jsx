@@ -20,8 +20,6 @@ import { changePlaylistVisibility, deletePlaylist } from "../api/playlists-api";
 import { useUserContext } from "../contexts/UserContext";
 import { usePlaylistsContext } from "../contexts/playlistsCtx";
 
-const ITEM_HEIGHT = 48;
-
 export default function SongsModal({visible, playlist, songs, setSongs, onClose}) {
   const { user, saveUser } = useUserContext();
   const {setPlaylistIsPrivate, removePlaylist} = usePlaylistsContext();
@@ -42,6 +40,7 @@ export default function SongsModal({visible, playlist, songs, setSongs, onClose}
 
   async function handleAddSong(songData) {
     songData.playlistId = playlist.id;
+    songData.uploader = user.username;
     setNewSongData(songData);
     
     const res = await addSongToPlaylist(songData);

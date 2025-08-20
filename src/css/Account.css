@@ -49,24 +49,9 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 40px;
+  gap: 1rem;
   margin: 0 40px 40px 40px;
 }
-
-
-
-/* .personal-info-item {
-  padding: 10px;
-  color: var(--dark-black);
-  background-color: var(--dark-white);
-  border-radius: 10px;
-  height: 100px;
-  width: 400px;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-} */
 
 .personal-info-item-title {
   color: var(--dark-black);
@@ -95,8 +80,23 @@
 }
 
 .personal-info-password-modal-edit-row {
-  margin-bottom: 20px;
+  margin-bottom: 1rem;
 }
 
 .account-danger-zone-container {
+}
+
+.user-stats-container {
+	width: 40%; /* max-w-6xl = 1152px */
+  border-radius: 8px;
+  padding: 1.5rem;
+	gap: 6px;
+	display: flex;
+	flex-direction: column;
+
+  background: linear-gradient(
+    to bottom right,
+    #eff6ff, /* from-blue-50 */
+    #e0e7ff  /* to-indigo-100 */
+  );
 }

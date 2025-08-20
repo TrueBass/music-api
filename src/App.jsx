@@ -1,6 +1,5 @@
 import './css/App.css';
 
-import React, { useState } from 'react';
 import {Routes, Route, Navigate} from "react-router-dom"; 
 
 import { UserProvider } from './contexts/UserContext.jsx';
@@ -48,7 +47,7 @@ function App() {
         <Route path='/account' element={
           <ProtectedLayout>
             <PlayingSongProvider>
-              <Account/>
+              <Account />
             </PlayingSongProvider>
           </ProtectedLayout>
         }/>
@@ -57,7 +56,7 @@ function App() {
           <ProtectedLayout>
             <PlayingSongProvider>
               <PlaylistsProvider>
-                <Playlists/>
+                <Playlists />
               </PlaylistsProvider>
             </PlayingSongProvider>
           </ProtectedLayout>

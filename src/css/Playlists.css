@@ -39,6 +39,7 @@
   background-color: var(--dark-white);
   border-radius: 16px;
   border: 4px solid var(--dark-blue);
+  z-index: 100;
 }
 
 .creatre-playlist-private-switch {

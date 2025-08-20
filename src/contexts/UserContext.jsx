@@ -56,6 +56,10 @@ export const UserProvider = ({children}) => {
     updateUser
   };
 
+  if (!user) {
+    return <div>Loading user...</div>;
+  }
+
   return (
     <UserContext.Provider value={value}>
       {children}

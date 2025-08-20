@@ -1,3 +1,5 @@
+import { refreshAccessToken } from "./user-api";
+
 const PLAYLISTS_API_URL = "http://localhost:8080/music-api/playlist";
 
 export const getAllUserPlaylists = async (userId) => {
@@ -55,6 +57,38 @@ export const deletePlaylist = async (playlistId) => {
     }
   } catch (error) {
     console.log(error.message);
+    return null;
+  }
+};
+
+export const getLargestPlaylist = async (userId) => {
+  try {
+    let bearerToken = localStorage.getItem("accessToken");
+
+    let response = await fetch(`http://localhost:8080/music-api/stats?userId=${userId}`, {
+      method: "GET",
+      headers: {
+        'Content-Type': 'application/json',
+        "Authorization": `Bearer ${bearerToken}`
+      }
+    });
+
+    if(response.status == 401){
+      await refreshAccessToken();
+      bearerToken = localStorage.getItem("accessToken");
+      response = await fetch(`http://localhost:8080/music-api/stats?userId=${userId}`, {
+        method: "GET",
+        headers: {
+          'Content-Type': 'application/json',
+          "Authorization": `Bearer ${bearerToken}`
+        }
+      });
+    }
+
+    const deserializedRes = await response.json();
+    if(!response.ok) return deserializedRes.message;
+    return deserializedRes;
+  } catch (error) {
     return null;
   }
 };

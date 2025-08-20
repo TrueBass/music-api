@@ -1,5 +1,6 @@
 const USERS_API_URL = "http://localhost:8080/music-api/users";
 const PLAYLISTS_API_URL = "http://localhost:8080/music-api/playlist";
+const REFERSH_TOKEN_URL = "http://localhost:8080/music-api/users/refresh";
 
 function parseJwt (token) {
   try {
@@ -75,7 +76,7 @@ export const logoutUser = async () => {
     if(response.ok){
       localStorage.clear();
     }
-    
+
     return response.ok;
   } catch (error) {
     console.log(error.message);
@@ -100,7 +101,8 @@ export const updateUsername = async (username) => {
       return null;
     }
 
-    return response.ok;
+    const parsedRes = await response.text();
+    return parsedRes;
   } catch (error) {
     console.log(error.message);
     return null;
@@ -195,29 +197,36 @@ export const createPlaylist = async (createPlaylistBody) => {
   }
 };
 
-const refreshAccessToken = async () => {
+export const refreshAccessToken = async () => {
   const refreshToken = localStorage.getItem('refreshToken');
 
   if (!refreshToken) {
+    console.log("No refresh token");
     return; // No refresh token, log the user out or do other actions
   }
 
-  const response = await fetch('https://your-api-endpoint/refresh-token', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ refreshToken }),
-  });
+  try{
+    const response = await fetch(REFERSH_TOKEN_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ refreshToken }),
+    });
 
-  if (response.ok) {
-    const data = await response.json();
-    localStorage.setItem('accessToken', data.accessToken);
-  } else {
-    // If refresh fails, log the user out
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
-    // Redirect to login page
-    window.location.href = '/login';
+    if (response.ok) {
+      const data = await response.json();
+      console.log(response);
+      localStorage.setItem('accessToken', data.accessToken);
+    } else {
+      // If refresh fails, log the user out
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');
+      // Redirect to login page
+      window.location.href = '/login';
+    }
+  }catch(error){
+    console.log(error.message);
+    return;
   }
 };

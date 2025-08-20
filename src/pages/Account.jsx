@@ -4,16 +4,22 @@ import { useUserContext } from "../contexts/UserContext";
 import { Button, TextField } from "@mui/material";
 import { IconMail, IconUserHeart, IconCoins, IconPlaylist, IconMusic } from '@tabler/icons-react';
 import { validateEmail, validateUsername, validatePassword } from "../validators/validations";
-import PasswordTextField from "../components/PasswordTextField";
-import { updateEmail, updateUsername, updatePassword } from "../api/user-api";
-import PopUpMessage from "../components/PopUpMessage";
-import SongsList from "../components/SongsList";
+
+import { getLargestPlaylist } from "../api/playlists-api";
 import { getTop10ForUser } from "../api/songs-api";
+import { updateEmail, updateUsername, updatePassword, refreshAccessToken } from "../api/user-api";
+
+import PopUpMessage from "../components/PopUpMessage";
+import TopSongsList from "../components/TopSongsList";
+import StatisticsList from "../components/StatisticsList";
+import PasswordTextField from "../components/PasswordTextField";
 
 export default function Account() {
   const {user, updateUser} = useUserContext();
 
   const [topSongs, setTopSongs] = useState([]);
+  const [statValues, setStatValues] = useState({});
+
   const [username, setUsername] = useState(user?.username);
   const [email, setEmail] = useState(user?.email);
   const [oldPassword, setOldPassword] = useState("");
@@ -28,17 +34,24 @@ export default function Account() {
 
   useEffect(()=>{
     const getTopSongs = async () => {
-      const res = await getTop10ForUser(user.id);
-      console.log(res);
-
-      if(res === null){
+      let res = await getTop10ForUser(user.id);
+      if(res === null) {
         return;
       }
 
       setTopSongs(res);
     };
+    const getLargestPl = async () => {
+      let res = await getLargestPlaylist(user.id);
+      if (res === null) {
+        return;
+      }
+
+      setStatValues(res);
+    }
 
     getTopSongs();
+    getLargestPl();
   }, []);
 
   const handleUpdateEmail = async () => {
@@ -97,8 +110,8 @@ export default function Account() {
 
     const res = await updateUsername(trimmedUsername);
     if(res) {
+      localStorage.setItem("accessToken", res);
       const updateRes = await updateUser(trimmedUsername);
-      console.log(updateRes);
       if(!updateRes) {
         setGlobalError(
           "Something went wrong when retrieving user.\nTry to reload and retry if necesarry."
@@ -201,39 +214,18 @@ export default function Account() {
               </div>
             </div>
           </div>
-
-         
-          <div className="personal-info-user-creds">
-            <div className="personal-info-item">
-              <div className="personal-info-item-title">
-                <h2>Social Credits</h2>
-                <IconCoins stroke={2} />
-              </div>
-              <p>{user?.socialCredit}</p>
+          <div className="user-stats-container">
+            <div style={{ marginBottom: '1rem' }}>
+              <h2 style={{ fontWeight: 'bold', color: '#111827', marginBottom: '0.5rem'}}>
+                Your Music Statistics
+              </h2>
+              <p style={{color: '#4b5563'}}>
+                Track your progress and achievements on the MP3 API platform
+              </p>
             </div>
-            
-            <div className="personal-info-item">
-              <div className="personal-info-item-title">
-                <h2>Top 10 Songs</h2>
-                <IconMusic stroke={2} />
-              </div>
-              {topSongs?
-                <SongsList>
-                {topSongs.map((s)=><li style={{backgroundColor: "black"}}>
-                  <h3>{s.title} - {s.author}</h3>
-                  <h3>Likes: {s.likes}</h3>
-                </li>)}
-              </SongsList>:
-              <h2 style={{color: "black"}}>No songs added yet.</h2>}
-            </div>
-            <div className="personal-info-item">
-              <div className="personal-info-item-title">
-                <h2>Playlists</h2>
-                <IconPlaylist stroke={2} />
-              </div>
-            </div>
+            <StatisticsList stats={statValues} socialCreds={user.socialCredit}/>
+            <TopSongsList topSongs={topSongs}/>
           </div>
-        
         </div>
       </div>
 
