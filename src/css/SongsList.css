@@ -1,11 +1,17 @@
+
 .songs-cards-list-container {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  flex-grow: 1;
   align-content: flex-start;
-  /* border: 1px solid red; */
   overflow-y: auto;
   width: 100%;
-  height: auto;
   padding: 20px 0 0 0;
+  
+}
+
+.songs-cards-list-container > p {
+  width: 100%;
+  text-align: center;
 }

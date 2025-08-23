@@ -75,7 +75,7 @@ export default function Playlists() {
   useEffect(()=>{
     const getAllSongs = async (playlistId) => {
       if(!playlistId) return;
-      const songsFromPlaylist = await getAllSongsInfoFromPlaylist(playlist.id);
+      const songsFromPlaylist = await getAllSongsInfoFromPlaylist(playlistId);
       setSongs(songsFromPlaylist);
     }
 
@@ -88,7 +88,7 @@ export default function Playlists() {
   }
 
   async function onPlayCick() {
-    setCurrPlayingSongId()
+    setCurrPlayingSongId();
   }
 
   return (

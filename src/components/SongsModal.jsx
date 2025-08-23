@@ -8,13 +8,13 @@ import { IconPlus,
 } from '@tabler/icons-react';
 
 import SongCard from "./SongCard";
-import SongsList from "./SongsList";
+import SongsListNp from "./SongsLIstNp";
 import UploadField from "./UploadField";
 import AddSongModal from "./AddSongModal";
 
 import { IconButton, Menu, MenuItem } from "@mui/material";
 
-import { addSongToPlaylist } from "../api/songs-api";
+import { addSongToPlaylist, deleteSong } from "../api/songs-api";
 import { updateSocialCredit } from "../api/user-api";
 import { changePlaylistVisibility, deletePlaylist } from "../api/playlists-api";
 import { useUserContext } from "../contexts/UserContext";
@@ -77,8 +77,13 @@ export default function SongsModal({visible, playlist, songs, setSongs, onClose}
     handleMoreClose();
   };
 
-  const handleDeleteSong = (playlistId, songId) => {
-    // TODO: inplement api call and ui updating
+  const handleDeleteSong = async (songId) => {
+    const res = await deleteSong(songId);
+    if(res !== undefined) {
+      console.log("Something went wrong when deleting song.\n", res);
+      return;
+    }
+    setSongs(prev=>prev.filter(song => song.id!==songId));
   };
 
   return (
@@ -125,11 +130,12 @@ export default function SongsModal({visible, playlist, songs, setSongs, onClose}
           <div className="playlists-songs-empty">
             <h3>There are no songs. Try to add one.</h3>
           </div>:
-          <SongsList>
+          <SongsListNp>
           {songs?.map((s)=>
-            <SongCard key={s.id} song={s} onDelete={()=>handleDeleteSong(playlist.id, s.id)}/>
+            <SongCard key={s.id} song={s} onDelete={async()=>await handleDeleteSong(s.id)}/>
           )}
-        </SongsList>}
+        </SongsListNp>
+        }
       </div>
       <div className="playlists-songs-empty" style={{display: addSongModalIsOpen? "flex": "none"}}>
         {Object.keys(newSongData).length == 0?

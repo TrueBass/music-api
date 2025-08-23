@@ -10,6 +10,7 @@ import { IconCoins } from '@tabler/icons-react';
 import SongCard from "../components/SongCard";
 import SearchBar from "../components/SearchBar";
 import SongsList from "../components/SongsList";
+import SongsListNp from "../components/SongsLIstNp";
 
 
 import {
@@ -33,28 +34,9 @@ export default function Home() {
   const [errors, setErrors] = useState({});
   const [searchFlag, setSearchFlag] = useState(false);
 
-  useEffect(()=>{
-    const getPopularSongsContent = async () => {
-      setErrors({});
-
-      const res = await getAllPopularSongs(user.id);
-      
-      if(typeof res === "string") {
-        setErrors({global: res});
-        return;
-      }
-  
-      setPopularSongs(res);
-    };
-
-    getPopularSongsContent();
-  }, []);
-
   function onSearchQueryChange(e) {
     const trimmedText = e.target.value;
     setSearchQuery(trimmedText);
-
-    // if(trimmedText.length < 2) return;
   }
 
   async function handleSearch(query) {
@@ -108,17 +90,27 @@ export default function Home() {
       <div className="home-main-content">
         {Object.keys(errors).length > 0?
         <h2 style={{color: "white"}}>Something went wrong. We couldn't fetch popular songs.</h2>:
-        <SongsList>
-          {searchFlag?
-            searchResultSongs?.length?
-              searchResultSongs.map((s)=>
-                <SongCard key={s.id} song={s} style="white" updateSongList={updateSongList} likable={true}/>
-              ):
-              <div style={{width: "100%", textAlign: "end"}}><h2>We couldn't find anything...</h2></div>:
-          popularSongs?.map((s)=>
-            <SongCard key={s.id} song={s} style="white" updateSongList={updateSongList} likable={true}/>
-          )}
-        </SongsList>}
+        // <SongsList>
+        //   {searchFlag?
+        //     searchResultSongs?.length?
+        //       searchResultSongs.map((s)=>
+        //         <SongCard key={s.id} song={s} style="white" updateSongList={updateSongList} likable={true}/>
+        //       ):
+        //       <div style={{width: "100%", textAlign: "end"}}><h2>We couldn't find anything...</h2></div>:
+        //   popularSongs?.map((s)=>
+        //     <SongCard key={s.id} song={s} style="white" updateSongList={updateSongList} likable={true}/>
+        //   )}
+        // </SongsList>
+        searchFlag?
+          <SongsListNp>
+            {searchResultSongs?.length?
+               searchResultSongs.map((s)=>
+                 <SongCard key={s.id} song={s} style="white" updateSongList={updateSongList} likable={true}/>
+               ):
+               <div style={{width: "100%", textAlign: "end"}}><h2>We couldn't find anything...</h2></div>}
+          </SongsListNp>:
+        <SongsList userId={user.id}/>
+        }
       </div>
     </div>
   );

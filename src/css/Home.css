@@ -28,5 +28,8 @@
 }
 
 .home-main-content {
+  display: flex;
+  flex-direction: column;
+  height: 90%;
   width: 60%;
 }

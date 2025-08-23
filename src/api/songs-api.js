@@ -26,12 +26,34 @@ export const addSongToPlaylist = async (body) => {
   }
 };
 
+export const deleteSong = async (songId) => {
+  let bearerToken = localStorage.getItem("accessToken");
+  try {
+    const response = await fetch(`${SONGS_API_URL}/delete/${songId}`, {
+      method: "DELETE",
+      headers: {
+        'Content-Type': 'application/json',
+        "Authorization": `Bearer ${bearerToken}`
+      }
+    });
+    if(!response.ok) {
+      const deserializedRes = await response.text();
+      return deserializedRes;
+    }
+  } catch(error) {
+    console.log("Internal fetch error!\n");
+    return null;
+  }
+};
+
 export const getAllSongsInfoFromPlaylist = async (playlistId) => {
+  let bearerToken = localStorage.getItem("accessToken");
   try {
     const response = await fetch(`${SONGS_API_URL}/info/all/${playlistId}`, {
       method: "GET",
       headers: {
         'Content-Type': 'application/json',
+        "Authorization": `Bearer ${bearerToken}`
       }
     });
 
@@ -112,10 +134,10 @@ export const getAllPopularSongs = async (userId) => {
   }
 };
 
-export const getTop10ForUser = async (userId) => {
+export const getTop5ForUser = async (userId) => {
   let bearerToken = localStorage.getItem("accessToken");
   try {
-    let response = await fetch(`${SONGS_API_URL}/top10?userId=${userId}`, {
+    let response = await fetch(`${SONGS_API_URL}/top5?userId=${userId}`, {
       method: "GET",
       headers: {
         'Content-Type': 'application/json',

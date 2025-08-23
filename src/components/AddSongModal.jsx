@@ -1,14 +1,24 @@
 import "../css/AddSongModal.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TextField, Button, FormControl, Select, InputLabel, MenuItem, NativeSelect } from "@mui/material";
-import genres from "../enums/genres";
+// import genres from "../enums/genres";
+import { getAllGenres } from "../api/genres-api";
 
 export default function AddSongModal({songData, setSongData, onAdd, onClose}){
 
   const [errors, setErrors] = useState({});
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
-  const [songGenre, setSongGenre] = useState("OTHER");
+  const [songGenre, setSongGenre] = useState("");
+  const [genres, setGenres] = useState([{id: "0", name: "OTHER"}]);
+
+  useEffect(()=>{
+    const foo = async () => {
+      const res = await getAllGenres();
+      setGenres(res);
+    }
+    foo();
+  }, []);
 
   async function handleAddSong() {
     const clearTitle = title.trim();
@@ -25,7 +35,8 @@ export default function AddSongModal({songData, setSongData, onAdd, onClose}){
     if(Object.keys(newErrors).length > 0)
       return;
 
-    await onAdd({...songData, author: clearAuthor, title: clearTitle, genre: songGenre});
+    await onAdd({...songData, author: clearAuthor, title: clearTitle, genreId: songGenre.id});
+    setSongData({});
     onClose&&onClose();
   }
 
@@ -34,7 +45,8 @@ export default function AddSongModal({songData, setSongData, onAdd, onClose}){
   }
   
   function handleGenreSelect(e) {
-    setSongGenre(e.target.value);
+    const genre = e.target.value;
+    setSongGenre(genre);
   }
 
   return (
@@ -53,7 +65,7 @@ export default function AddSongModal({songData, setSongData, onAdd, onClose}){
         <InputLabel>Genre</InputLabel>
         <Select
           label="Genre"
-          defaultValue="OTHER"
+          defaultValue={songGenre}
           MenuProps={{
             PaperProps: {
                 style: {
@@ -66,8 +78,8 @@ export default function AddSongModal({songData, setSongData, onAdd, onClose}){
           value={songGenre}
           onChange={handleGenreSelect}
         >
-          {Object.values(genres).map((g, i)=>
-            <MenuItem key={i} value={g}>{g}</MenuItem>
+          {genres?.map((genre, i)=>
+            <MenuItem key={genre.id} value={genre}>{genre.name}</MenuItem>
           )}
         </Select>
       </FormControl>
