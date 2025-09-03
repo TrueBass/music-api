@@ -177,10 +177,14 @@ export const updateSocialCredit = async (body) => {
 };
 
 export const createPlaylist = async (createPlaylistBody) => {
+  const bearerToken = localStorage.getItem("accessToken");
   try {
     const response = await fetch(`${PLAYLISTS_API_URL}/create`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        "Authorization": `Bearer ${bearerToken}`
+      },
       body: JSON.stringify(createPlaylistBody)
     });
     
@@ -228,5 +232,28 @@ export const refreshAccessToken = async () => {
   }catch(error){
     console.log(error.message);
     return;
+  }
+};
+
+export const deleteUser = async (userId) => {
+  const bearerToken = localStorage.getItem("accessToken");
+
+  try {
+    const response = await fetch(`${USERS_API_URL}/${userId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${bearerToken}`
+      }
+    });
+
+    if(response.ok) {
+      localStorage.clear();
+    }
+
+    return response.ok;
+  } catch (error) {
+    console.log(error);
+    return false;
   }
 };

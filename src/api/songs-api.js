@@ -4,11 +4,13 @@ const LIKES_API_URL = "http://localhost:8080/music-api/likes";
 import { refreshAccessToken } from "./user-api";
 
 export const addSongToPlaylist = async (body) => {
+  let bearerToken = localStorage.getItem("accessToken");
   try {
     const response = await fetch(`${SONGS_API_URL}/add`, {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',
+        "Authorization": `Bearer ${bearerToken}`
       },
       body: JSON.stringify(body)
     });
@@ -47,13 +49,11 @@ export const deleteSong = async (songId) => {
 };
 
 export const getAllSongsInfoFromPlaylist = async (playlistId) => {
-  let bearerToken = localStorage.getItem("accessToken");
   try {
     const response = await fetch(`${SONGS_API_URL}/info/all/${playlistId}`, {
       method: "GET",
       headers: {
         'Content-Type': 'application/json',
-        "Authorization": `Bearer ${bearerToken}`
       }
     });
 

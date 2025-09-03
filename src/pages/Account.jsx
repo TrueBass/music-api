@@ -6,8 +6,8 @@ import { IconMail, IconUserHeart, IconCoins, IconPlaylist, IconMusic } from '@ta
 import { validateEmail, validateUsername, validatePassword } from "../validators/validations";
 
 import { getLargestPlaylist } from "../api/playlists-api";
-import { getTop10ForUser } from "../api/songs-api";
-import { updateEmail, updateUsername, updatePassword, refreshAccessToken } from "../api/user-api";
+import { getTop5ForUser } from "../api/songs-api";
+import { updateEmail, updateUsername, updatePassword, refreshAccessToken, deleteUser, logoutUser } from "../api/user-api";
 
 import PopUpMessage from "../components/PopUpMessage";
 import TopSongsList from "../components/TopSongsList";
@@ -34,7 +34,7 @@ export default function Account() {
 
   useEffect(()=>{
     const getTopSongs = async () => {
-      let res = await getTop10ForUser(user.id);
+      let res = await getTop5ForUser(user.id);
       if(res === null) {
         return;
       }
@@ -147,6 +147,15 @@ export default function Account() {
 
     setChangePasswdModalIsOpen(false);
   }
+
+  async function handleDeleteAccount() {
+    const res = await deleteUser(user.id);
+    console.log(res);
+
+    if(res) {
+      window.location.href = '/signup';
+    }
+  }
   
   return (
     globalError.length > 0?
@@ -231,6 +240,7 @@ export default function Account() {
 
       <div className="account-danger-zone-container">
         <Button className="account-danger-zone-item gi-delete-account"
+          onClick={handleDeleteAccount}
           variant="outlined" color="error" sx={{borderWidth: 2}} fullWidth>
           Delete account
         </Button>
