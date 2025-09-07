@@ -27,6 +27,7 @@ export const changePlaylistVisibility = async (playlistId, playlistVisibility) =
       method: "POST",
       headers: {
         'Content-Type': 'application/json',
+        "Authorization": `Bearer ${bearerToken}`
       }
     });
 
@@ -43,11 +44,13 @@ export const changePlaylistVisibility = async (playlistId, playlistVisibility) =
 };
 
 export const deletePlaylist = async (playlistId) => {
+  const bearerToken = localStorage.getItem("accessToken");
   try {
     const response = await fetch(`${PLAYLISTS_API_URL}/delete?playlistId=${playlistId}`, {
       method: "DELETE",
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        "Authorization": `Bearer ${bearerToken}`
       }
     });
 

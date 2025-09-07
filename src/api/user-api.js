@@ -157,11 +157,13 @@ export const updatePassword = async (body) => {
 };
 
 export const updateSocialCredit = async (body) => {
+  const bearerToken = localStorage.getItem("accessToken");
   try {
     const response = await fetch(`${USERS_API_URL}/update-social-credit`, {
       method: "PUT",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${bearerToken}`
       },
       body: JSON.stringify(body)
     });
@@ -170,7 +172,7 @@ export const updateSocialCredit = async (body) => {
     if(!response.ok) {
       return deserializedRes.message;
     }
-    return deserializedRes.message;
+    return deserializedRes;
   } catch (error) {
     return 0;
   }

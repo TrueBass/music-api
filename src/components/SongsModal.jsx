@@ -29,6 +29,7 @@ export default function SongsModal({visible, playlist, songs, setSongs, onClose}
 
   const [moreMenuAnchorEl, setMoreMenuAnchorEl] = useState(null);
   const open = Boolean(moreMenuAnchorEl);
+  const [playlistPrivacy, setPlaylistPrivacy] = useState(playlist.isPrivate);
   
   const handleMoreClick = event => {
     setMoreMenuAnchorEl(event.currentTarget);
@@ -46,7 +47,7 @@ export default function SongsModal({visible, playlist, songs, setSongs, onClose}
     const res = await addSongToPlaylist(songData);
 
     const updateSocialCreditRes = await updateSocialCredit({
-      userId: user.id, changedSocialCredit: 5
+      userId: user.id, changedSocialCredit: 10
     });
 
     user.socialCredit = updateSocialCreditRes;
@@ -74,6 +75,7 @@ export default function SongsModal({visible, playlist, songs, setSongs, onClose}
       return;
     }
     setPlaylistIsPrivate(playlist.id, !playlist.isPrivate);
+    setPlaylistPrivacy(!playlistPrivacy);
     handleMoreClose();
   };
 
@@ -117,10 +119,10 @@ export default function SongsModal({visible, playlist, songs, setSongs, onClose}
           </MenuItem>
           <MenuItem onClick={handleToggleVisibility}>
             <div style={{display: "flex", justifyContent: "flex-start", alignItems: "center", width: "100%"}}>
-              {playlist.isPrivate?
+              {playlistPrivacy?
                 <IconLockOpen2 stroke={2} />:
                 <IconLock stroke={2} />}
-              <p>Make {playlist.isPrivate? "public": "private"}</p>
+              <p>Make {playlistPrivacy? "public": "private"}</p>
             </div>
           </MenuItem>
         </Menu>

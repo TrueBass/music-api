@@ -51,7 +51,7 @@ export default function SearchBar({value, onChange, searchHistory, onSearch, onD
 
   return (
     <ClickAwayListener onClickAway={()=>{setHistoryModalIsOpen(false);}}>
-      <div className="searchbar-container" style={{borderRadius: historyModalIsOpen&&searchHistory.length? "22px 22px 0 0": "50px"}}>
+      <div className="searchbar-container" style={{borderRadius: (debouncedQueryRes.length && historyModalIsOpen)||(historyModalIsOpen&&searchHistory.length)? "22px 22px 0 0": "50px"}}>
         
           <input className="searchbar-input"
             type="text" placeholder="Search something..."

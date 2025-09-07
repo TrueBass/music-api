@@ -65,7 +65,7 @@
 .personal-info-item-title {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
 }
 
 .personal-info-item-edit-row {
