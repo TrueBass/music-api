@@ -14,10 +14,6 @@ export default function PlaylistCard({item, onClick=()=>{}}) {
         <p>Modified</p>
         {item?.modifiedAt}
       </div>}
-      <div className="playlist-card-row">
-        <p>Created</p>
-        {item.createdAt}
-      </div>
     </li>
   );
 }

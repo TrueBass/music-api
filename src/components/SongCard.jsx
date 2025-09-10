@@ -34,9 +34,6 @@ export default function SongCard({song, onClick, onDelete, style="dark", updateS
         {likable&&<div className="song-card-row" style={style == "white"?{color: 'black'}:{}}>
           <h4>{song.uploader}</h4>
         </div>}
-        <div className="song-card-row" style={style == "white"?{color: 'black'}:{}}>
-          Added at: {song.addedAt}
-        </div>
       </div>
       <h2 style={{color: style == "white"?"black": "white"}}>{song.likes}</h2>
       <IconButton disabled={!likable} onClick={onLikeSong}>
