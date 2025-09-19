@@ -1,6 +1,6 @@
-const USERS_API_URL = "http://localhost:8080/music-api/users";
-const PLAYLISTS_API_URL = "http://localhost:8080/music-api/playlist";
-const REFERSH_TOKEN_URL = "http://localhost:8080/music-api/users/refresh";
+const USERS_API_URL = "https://music-api-deploymen.onrender.com/music-api/users";
+const PLAYLISTS_API_URL = "https://music-api-deploymen.onrender.com/music-api/playlist";
+const REFERSH_TOKEN_URL = "https://music-api-deploymen.onrender.com/music-api/users/refresh";
 
 function parseJwt (token) {
   try {

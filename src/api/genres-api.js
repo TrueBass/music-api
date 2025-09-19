@@ -1,4 +1,4 @@
-const GENRE_API_URL = "http://localhost:8080/music-api/genres";
+const GENRE_API_URL = "https://music-api-deploymen.onrender.com/music-api/genres";
 
 export const getAllGenres = async () => {
     let bearerToken = localStorage.getItem("accessToken");

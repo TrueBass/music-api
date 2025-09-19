@@ -54,7 +54,7 @@ const SignupForm = ({ onFormSwitch }) => {
     }
     
     try {
-      const API_URL = "http://localhost:8080/music-api/users";
+      const API_URL = "https://music-api-deploymen.onrender.com/music-api/users";
 
       const response = await fetch(`${API_URL}/signup`, {
         method: 'POST',
@@ -66,6 +66,7 @@ const SignupForm = ({ onFormSwitch }) => {
       
       if (response.ok) {
         const data = await response.json();
+        console.log(data);
         setSuccessMessage('Account created successfully!');
       } else {
         setErrors({ email: 'Email already in use or registration failed' });

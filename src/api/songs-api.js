@@ -1,5 +1,5 @@
-const SONGS_API_URL = "http://localhost:8080/music-api/songs";
-const LIKES_API_URL = "http://localhost:8080/music-api/likes";
+const SONGS_API_URL = "https://music-api-deploymen.onrender.com/music-api/songs";
+const LIKES_API_URL = "https://music-api-deploymen.onrender.com/music-api/likes";
 
 import { refreshAccessToken } from "./user-api";
 

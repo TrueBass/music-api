@@ -1,6 +1,7 @@
 import { refreshAccessToken } from "./user-api";
 
-const PLAYLISTS_API_URL = "http://localhost:8080/music-api/playlist";
+const PLAYLISTS_API_URL = "https://music-api-deploymen.onrender.com/music-api/playlist";
+const STATS_API_URL = "https://music-api-deploymen.onrender.com/music-api/stats";
 
 export const getAllUserPlaylists = async (userId) => {
   try {
@@ -68,7 +69,7 @@ export const getLargestPlaylist = async (userId) => {
   try {
     let bearerToken = localStorage.getItem("accessToken");
 
-    let response = await fetch(`http://localhost:8080/music-api/stats?userId=${userId}`, {
+    let response = await fetch(`${STATS_API_URL}?userId=${userId}`, {
       method: "GET",
       headers: {
         'Content-Type': 'application/json',
@@ -79,7 +80,7 @@ export const getLargestPlaylist = async (userId) => {
     if(response.status == 401){
       await refreshAccessToken();
       bearerToken = localStorage.getItem("accessToken");
-      response = await fetch(`http://localhost:8080/music-api/stats?userId=${userId}`, {
+      response = await fetch(`${STATS_API_URL}?userId=${userId}`, {
         method: "GET",
         headers: {
           'Content-Type': 'application/json',
