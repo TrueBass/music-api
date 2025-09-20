@@ -1,5 +1,5 @@
 import "../css/SongsModal.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IconPlus,
   IconLockOpen2,
   IconDotsVertical,
@@ -30,6 +30,10 @@ export default function SongsModal({visible, playlist, songs, setSongs, onClose}
   const [moreMenuAnchorEl, setMoreMenuAnchorEl] = useState(null);
   const open = Boolean(moreMenuAnchorEl);
   const [playlistPrivacy, setPlaylistPrivacy] = useState(playlist.isPrivate);
+
+  useEffect(()=>{
+    setPlaylistPrivacy(playlist.isPrivate);
+  }, [playlist]);
   
   const handleMoreClick = event => {
     setMoreMenuAnchorEl(event.currentTarget);
@@ -75,7 +79,7 @@ export default function SongsModal({visible, playlist, songs, setSongs, onClose}
       return;
     }
     setPlaylistIsPrivate(playlist.id, !playlist.isPrivate);
-    setPlaylistPrivacy(!playlistPrivacy);
+    setPlaylistPrivacy(prev=>!prev);
     handleMoreClose();
   };
 
@@ -120,9 +124,9 @@ export default function SongsModal({visible, playlist, songs, setSongs, onClose}
           <MenuItem onClick={handleToggleVisibility}>
             <div style={{display: "flex", justifyContent: "flex-start", alignItems: "center", width: "100%"}}>
               {playlistPrivacy?
-                <IconLock stroke={2} />
-                :<IconLockOpen2 stroke={2} />}
-              <p>Make {playlistPrivacy? "private": "public"}</p>
+                <IconLockOpen2 stroke={2} />
+                :<IconLock stroke={2} />}
+              <p>Make {playlistPrivacy? "public": "private"}</p>
             </div>
           </MenuItem>
         </Menu>
