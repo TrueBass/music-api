@@ -38,7 +38,7 @@ export const UserProvider = ({children}) => {
   }, [user]);
 
   const saveUser = (user) => {
-    setUser(user);
+    setUser({...user});
   };
 
   const updateUser = async (username) => {

@@ -120,9 +120,9 @@ export default function SongsModal({visible, playlist, songs, setSongs, onClose}
           <MenuItem onClick={handleToggleVisibility}>
             <div style={{display: "flex", justifyContent: "flex-start", alignItems: "center", width: "100%"}}>
               {playlistPrivacy?
-                <IconLockOpen2 stroke={2} />:
-                <IconLock stroke={2} />}
-              <p>Make {playlistPrivacy? "public": "private"}</p>
+                <IconLock stroke={2} />
+                :<IconLockOpen2 stroke={2} />}
+              <p>Make {playlistPrivacy? "private": "public"}</p>
             </div>
           </MenuItem>
         </Menu>
