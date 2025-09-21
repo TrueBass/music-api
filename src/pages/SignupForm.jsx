@@ -54,7 +54,7 @@ const SignupForm = ({ onFormSwitch }) => {
     }
     
     try {
-      const API_URL = "https://music-api-deploymen.onrender.com/music-api/users";
+      const API_URL = `${import.meta.env.VITE_MUSIC_API_URL}/music-api/users`;
 
       const response = await fetch(`${API_URL}/signup`, {
         method: 'POST',

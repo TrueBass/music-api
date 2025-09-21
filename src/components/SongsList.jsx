@@ -23,7 +23,7 @@ export default function SongsList({userId}) {
     if (isLoading || !hasMore) return; // Prevent multiple requests at once or if no more data
 
     setIsLoading(true);
-    const SONGS_API_URL = "https://music-api-deploymen.onrender.com/music-api/songs";
+    const SONGS_API_URL = `${import.meta.env.VITE_MUSIC_API_URL}/music-api/songs`;
 
     let url = `${SONGS_API_URL}/popular/all?userId=${userId}&limit=${limit}`;
     if (cursor) {

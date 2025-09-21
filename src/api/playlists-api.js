@@ -1,7 +1,7 @@
 import { refreshAccessToken } from "./user-api";
 
-const PLAYLISTS_API_URL = "https://music-api-deploymen.onrender.com/music-api/playlist";
-const STATS_API_URL = "https://music-api-deploymen.onrender.com/music-api/stats";
+const PLAYLISTS_API_URL = `${import.meta.env.VITE_MUSIC_API_URL}/music-api/playlist`;
+const STATS_API_URL = `${import.meta.env.VITE_MUSIC_API_URL}/music-api/stats`;
 
 export const getAllUserPlaylists = async (userId) => {
   try {
@@ -77,17 +77,17 @@ export const getLargestPlaylist = async (userId) => {
       }
     });
 
-    if(response.status == 401){
-      await refreshAccessToken();
-      bearerToken = localStorage.getItem("accessToken");
-      response = await fetch(`${STATS_API_URL}?userId=${userId}`, {
-        method: "GET",
-        headers: {
-          'Content-Type': 'application/json',
-          "Authorization": `Bearer ${bearerToken}`
-        }
-      });
-    }
+    // if(response.status == 401){
+    //   await refreshAccessToken();
+    //   bearerToken = localStorage.getItem("accessToken");
+    //   response = await fetch(`${STATS_API_URL}?userId=${userId}`, {
+    //     method: "GET",
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //       "Authorization": `Bearer ${bearerToken}`
+    //     }
+    //   });
+    // }
 
     const deserializedRes = await response.json();
     if(!response.ok) return deserializedRes.message;

@@ -1,5 +1,5 @@
-const SONGS_API_URL = "https://music-api-deploymen.onrender.com/music-api/songs";
-const LIKES_API_URL = "https://music-api-deploymen.onrender.com/music-api/likes";
+const SONGS_API_URL = `${import.meta.env.VITE_MUSIC_API_URL}/music-api/songs`;
+const LIKES_API_URL = `${import.meta.env.VITE_MUSIC_API_URL}/music-api/likes`;
 
 import { refreshAccessToken } from "./user-api";
 
@@ -145,24 +145,24 @@ export const getTop5ForUser = async (userId) => {
       }
     });
 
-    if(response.status == 401){
-      await refreshAccessToken();
-      bearerToken = localStorage.getItem("accessToken");
-      response = await fetch(`${SONGS_API_URL}/top10?userId=${userId}`, {
-        method: "GET",
-        headers: {
-          'Content-Type': 'application/json',
-          "Authorization": `Bearer ${bearerToken}`
-        }
-      });
-    }
+    // if(response.status == 401){
+    //   await refreshAccessToken();
+    //   bearerToken = localStorage.getItem("accessToken");
+    //   response = await fetch(`${SONGS_API_URL}/top10?userId=${userId}`, {
+    //     method: "GET",
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //       "Authorization": `Bearer ${bearerToken}`
+    //     }
+    //   });
+    // }
+    const deserializedRes = await response.json();
 
     if(!response.ok){
-      console.log("if error!");
+      console.log("if error!", deserializedRes);
       return null;
     }
 
-    const deserializedRes = await response.json();
     return deserializedRes;
   } catch (error){
     console.log("catch error", error.message);
